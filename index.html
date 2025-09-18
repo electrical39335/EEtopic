@@ -11,17 +11,12 @@
             text-align: center;
             background-color: #f5f5f5;
         }
-        #topic {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            padding: 20px;
-            background-color: #fff;
-            display: inline-block;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+
+        /* Button stays fixed at top */
+        #button-container {
+            margin-bottom: 30px;
         }
+
         button {
             padding: 15px 30px;
             font-size: 18px;
@@ -32,59 +27,59 @@
             color: white;
             transition: 0.3s;
         }
+
         button:hover {
             background-color: #0056b3;
+        }
+
+        #topic-container {
+            min-height: 80px; /* Reserve space for topic so button doesn’t shift */
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            word-wrap: break-word; /* Wrap long topics */
         }
     </style>
 </head>
 <body>
     <h1>Random Electrical Engineering Topic Selector</h1>
-    <button onclick="showRandomTopic()">Show Random Topic</button>
-    <div id="topic">Click the button to get a topic!</div>
+
+    <div id="button-container">
+        <button onclick="showRandomTopic()">Show Random Topic</button>
+    </div>
+
+    <div id="topic-container">Click the button to get a topic!</div>
 
     <script>
         const topics = [
-            /* Transformer Topics */
             "Transformer introduction", "Transformer on no load", "Transformer on load", "Transformer phasor diagram", "Transformer losses", "Transformer voltage regulation", "Transformer equivalent impedance on either side", "Transformer efficiency", "Parallel operation of transformer", "3 phase transformer", "Inrush current in transformer", "Transformer Scott connection", "Transformer VV connection", "Transformer OC SC test", "Sumpner test on transformer",
-            
-            /* DC Machine Topics */
             "DC machine introduction", "DC machine armature", "DC machine field winding", "DC machine armature winding", "DC machine armature reaction", "DC machine compensating winding", "DC machine interpoles", "DC machine power flow", "DC machine EMF", "DC machine speed", "DC machine torque", "DC machine efficiency", "DC machine as motor", "DC machine as generator", "DC machine separately excited", "DC machine series excited", "DC machine cumulative excited", "DC machine differential excited", "DC machine starter", "DC machine braking", "DC machine test", "Swinburne test on DC machine",
-            
-            /* Induction Machine Topics */
             "Induction machine EMF", "Induction machine construction", "Induction machine armature winding", "DC machine rotor winding", "Induction machine torque", "Induction machine speed", "Induction machine slip", "Induction machine torque-speed curve", "Induction machine power flow", "Induction machine copper loss", "Induction machine mechanical output", "Induction machine starting", "Induction machine braking", "Single phase induction motor", "Test on induction machines",
-            
-            /* Synchronous Machine Topics */
             "Synchronous machine", "Synchronous machine winding", "Demagnetizing, cross magnetizing, and magnetizing effect in synchronous machine", "Generated EMF of synchronous machine", "Voltage regulation in synchronous machine", "Measurement of voltage regulation in synchronous machine", "Test on synchronous machine", "V-curves in synchronous machine", "Power flow in synchronous machine", "Efficiency in synchronous machine", "Losses in synchronous machine", "Developed power in synchronous machine", "Power angle curve in synchronous machine", "Synchronous condenser", "Salient pole synchronous machine",
-
-            /* Diode & Rectifier Topics */
             "Diode current", "Diffusion capacitance in diode", "Junction capacitance in diode", "VI characteristic of diode", "Reverse recovery characteristic of diode", "Turn-on time of diode", "Reverse recovery time of diode",
             "Diode rectifier matrices", "Single phase half wave uncontrolled rectifier with R load", "Single phase half wave uncontrolled rectifier with L load", "Single phase half wave uncontrolled rectifier with C load", "Single phase half wave uncontrolled rectifier with RL load", "Single phase half wave uncontrolled rectifier with RE load", "Single phase half wave uncontrolled rectifier with RLE load", "3 phase half wave uncontrolled rectifier with RLE load", "3 phase full wave uncontrolled rectifier with RLE load",
-
-            /* Thyristor & Controlled Rectifier Topics */
             "Thyristor basics", "Latching and holding current of a thyristor", "Turn-on methods of thyristor", "VI characteristic of thyristor", "Reverse recovery characteristic of thyristor", "Reverse recovery time of thyristor", "Commutation techniques of thyristor", "Class A commutation", "Class B commutation", "Class C commutation", "Class D commutation", "Class E commutation",
             "Thyristor rectifier matrices", "Single phase half wave controlled rectifier with R load", "Single phase half wave controlled rectifier with L load", "Single phase half wave controlled rectifier with RL load", "Single phase half wave controlled rectifier with C load", "Single phase half wave controlled rectifier with RE load", "Single phase half wave controlled rectifier with RLE load", "Single phase full wave controlled rectifier with RLE load", "3 phase half wave controlled rectifier with RLE load", "3 phase full wave controlled rectifier with RLE load", "Effect of source inductance on rectifier",
-
-            /* Chopper Topics */
             "Chopper basics", "Step down chopper", "Step up chopper", "Step up-down chopper", "Buck converter", "Boost converter", "Buck-boost converter", "Output voltage in buck converter", "Output voltage in boost converter", "Output voltage in buck-boost converter", "Output current in buck converter", "Output current in boost converter", "Output current in buck-boost converter", "RMS switch current in buck converter", "Ripple current in buck converter", "Ripple voltage in buck converter", "Condition for continuous conduction in buck converter", "Class A chopper", "Class B chopper", "Class C chopper", "Class D chopper", "Class E chopper",
-
-            /* Inverter Topics */
             "Inverter basics", "Half wave inverter", "Full wave inverter", "RMS value of inverter output", "Fundamental RMS of output of inverter", "Modulation in inverter", "3 phase inverter", "180 mode 3 phase inverter", "120 mode 3 phase inverter", "Voltage inverter", "Current inverter",
-
-            /* Power System Topics */
             "Power system basics", "Power system transmission line types", "Power system voltage regulation", "Power system short transmission line", "Power system medium transmission line T network", "Power system medium transmission line Pi network", "Power system long transmission line", "Power system ABCD matrix", "Power system power equations", "Power system concept of travelling waves", "Power system transmission line parameters", "Power system line inductance", "Power system line capacitance", "Power system corona", "Power system skin effect", "Power system proximity effect", "Power system sag", "Power system bundled conductors", "Power system cables", "Power system Ferranti effect", "Power system surge impedance loading",
             "Power system compensation techniques", "Power system series compensation", "Power system shunt inductor compensation", "Power system shunt capacitance compensation", "Power system synchronous condenser compensation", "Power system methods of voltage control", "Power system load frequency control", "Power system area frequency control",
             "Power system distribution system", "Power system underground cables", "Power system construction of cables", "Power system insulators",
             "Power system generating station", "Power system electricity sector", "Power system all kinds of power plant", "Power system load factor", "Power system capacity factor", "Power system utilization factor",
             "Power system per unit system", "Power system fault analysis", "Power system single line diagram of power network", "Power system short circuit calculation for symmetrical faults", "Power system short circuit of synchronous machine", "Power system short circuit of loaded synchronous motor", "Power system unsymmetrical fault analysis", "Power system sequence impedance of transmission line", "Power system synchronous machine sequence circuit and sequence impedance", "Power system unsymmetrical fault on loaded generator", "Power system line-to-line fault", "Power system line-to-ground fault", "Power system double line-to-ground fault", "Power system Zbus", "Power system Ybus", "Power system short circuit rating",
             "Power system load flow study", "Power system bus classification", "Power system Gauss-Seidel method", "Power system Newton-Raphson method", "Power system decoupled load flow study", "Power system fast decoupled load flow",
-            "Power system switchgear and protection", "Power system relay", "Power system circuit breaker", "Electromagnetic relays", "Overcurrent relays", "Differential relays", "Distance relays", "Directional relays", "Thermal relays", "Buchholz relay", "Negative sequence relays", "Underfrequency relays", "Overvoltage and undervoltage relays", "Numerical relays", "Static relays",
+            "Power system switchgear and protection", "Power system relay", "Power system circuit breaker",
             "Power system stability", "Power system transient stability", "Power system steady-state stability", "Power system dynamic stability", "Power system power angle diagram", "Power system swing equation", "Power system equal area criteria",
             "Power system optimal power system operation", "Economic dispatch", "Unit commitment", "Load scheduling", "Power loss minimization", "Optimal power flow (OPF)"
         ];
 
         function showRandomTopic() {
             const randomIndex = Math.floor(Math.random() * topics.length);
-            document.getElementById('topic').innerText = topics[randomIndex];
+            document.getElementById('topic-container').innerText = topics[randomIndex];
         }
     </script>
 </body>
